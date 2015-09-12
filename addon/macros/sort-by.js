@@ -54,8 +54,12 @@ export default function(itemsKey, sortDefinitions) {
     sortDefinitions = Ember.A([sortDefinitions]);
   }
 
-  // TODO: Should we validate the all array values
-  assert('sortBy expects a string or array of strings for its second argument', isArray(sortDefinitions));
+  // Checks the sortDefinitions for correct value types.
+  assert('Ember.computed.sortBy expects a string or array of strings as the sort definition.',
+    isArray(sortDefinitions) && sortDefinitions.length > 0);
+  sortDefinitions.forEach(s => {
+    assert('Ember.computed.sortBy expects a string or array of strings as the sort definition.', typeof s === 'string');
+  });
 
   // Normalize the sort properties
   var normalizedSort = sortDefinitions.map(p => {
