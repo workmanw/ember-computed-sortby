@@ -44,5 +44,5 @@ export default function(itemsKey, sortDefinitions) {
     }));
   });
 
-  return computed.apply(null, args);
+  return computed.apply(null, args).readOnly();
 }
