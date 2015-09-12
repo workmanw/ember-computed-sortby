@@ -9,11 +9,11 @@ var isArray = Ember.isArray;
 
 /**
   A computed property which returns a new sorted array of content from the
-  first dependent array. The sort order is based on the string or array values
-  of the second argument.
+  first dependent array. The sort order is based on the string or array of string values
+  provided as the second argument.
 
   The second argument, sortDefinitions, can be a string or array of string value(s)
-  which indicates the property and direction of the sort. Adding a suffix of ':desc'
+  which indicates the item property and direction of the sort. Adding a suffix of ':desc'
   will cause the list to be sorted in descending order.
 
   Example:

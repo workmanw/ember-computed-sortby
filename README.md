@@ -1,17 +1,17 @@
 # Ember-computed-sortby
 
-Implementation for proposed computed macro addition to Ember. Details in emberjs/rfcs#87.
+Implementation for proposed computed macro addition to Ember. Details in [emberjs/rfcs#87](https://github.com/emberjs/rfcs/pull/87).
 
-Note: This is implemented as polyfill with the assumption that it will eventually be pulled into Ember.js. For that reason it contains an initializer that tacks `sortBy` onto the `Ember.computed` object so it can be used as: `Ember.computed.sortBy`. If anyone uses this addon and has objections to doing this, I'm willing to revisit this.
+**Note:** This is implemented as polyfill with the assumption that it will eventually be pulled into Ember.js. For that reason it contains an initializer that tacks `sortBy` onto the `Ember.computed` object so it can be used as: `Ember.computed.sortBy`. If anyone uses this addon and has objections to doing this, I'm willing to revisit this.
 
 ## Documentation
 
 A computed property which returns a new sorted array of content from the
-first dependent array. The sort order is based on the string or array values
-of the second argument.
+first dependent array. The sort order is based on the string or array of string values
+provided as the second argument.
 
 The second argument, sortDefinitions, can be a string or array of string value(s)
-which indicates the property and direction of the sort. Adding a suffix of ':desc'
+which indicates the item property and direction of the sort. Adding a suffix of ':desc'
 will cause the list to be sorted in descending order.
 
 Example:
