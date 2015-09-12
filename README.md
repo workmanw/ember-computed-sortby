@@ -2,6 +2,8 @@
 
 Implementation for proposed computed macro addition to Ember. Details in emberjs/rfcs#87.
 
+Note: This is implemented as polyfill with the assumption that it will eventually be pulled into Ember.js. For that reason it contains an initializer that tacks `sortBy` onto the `Ember.computed` object so it can be used as: `Ember.computed.sortBy`. If anyone uses this addon and has objections to doing this, I'm willing to revisit this.
+
 ## Documentation
 
 A computed property which returns a new sorted array of content from the
