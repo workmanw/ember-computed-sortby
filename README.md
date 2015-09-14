@@ -46,13 +46,22 @@ Method documentation:
 @public
 ```
 
-## Installation
+## Installing this addon
+
+From within your Ember CLI project directory:
+```
+ember install ember-computed-sortBy
+```
+
+## Running Tests
+
+### Setup
 
 * `git clone` this repository
 * `npm install`
 * `bower install`
 
-## Running Tests
+### Testing
 
 * `ember test`
 * `ember test --server`
