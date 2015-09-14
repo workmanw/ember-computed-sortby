@@ -4,17 +4,14 @@ var assert = Ember.assert;
 var get = Ember.get;
 var compare = Ember.compare;
 var computed = Ember.computed;
-var isArray = Ember.isArray;
+var a_slice = Array.prototype.slice;
 
 
 /**
   A computed property which returns a new sorted array of content from the
-  first dependent array. The sort order is based on the string or array of string values
-  provided as the second argument.
-
-  The second argument, sortDefinitions, can be a string or array of string value(s)
-  which indicates the item property and direction of the sort. Adding a suffix of ':desc'
-  will cause the list to be sorted in descending order.
+  a dependent array. The sort order is defined by the second, and any subsequent,
+  string arguments. Adding a suffix of ':desc' to any of those string arguments
+  will cause that order to be applied as descending.
 
   Example:
 
@@ -27,7 +24,7 @@ var isArray = Ember.isArray;
     sortedTodosDesc: Ember.computed.sortBy('todos', 'name:desc'),
 
     // using secondary sort
-    sortedPriority: Ember.computed.sortBy('todos', ['priority', 'name'])
+    sortedPriority: Ember.computed.sortBy('todos', 'priority', 'name')
   });
 
   var todoList = ToDoList.create({todos: [
@@ -45,20 +42,17 @@ var isArray = Ember.isArray;
   @method sort
   @for Ember.computed
   @param {String} itemsKey
-  @param {String or Array} sortDefinitions a string or array of strings whose value(s) are sort properties (add `:desc` to the arrays sort properties to sort descending)
+  @param {String} property name(s) to sort on. Append ':desc' to trigger sort to be applied as descending.
   @return {Ember.ComputedProperty} computes a new sorted array based on the sort property array
   @public
 */
-export default function(itemsKey, sortDefinitions) {
-  if(typeof sortDefinitions === 'string') {
-    sortDefinitions = Ember.A([sortDefinitions]);
-  }
+export default function(/*itemsKey, sortDefinitions*/) {
+  var sortDefinitions = a_slice.call(arguments);
+  var itemsKey = sortDefinitions.shift(0);
 
-  // Checks the sortDefinitions for correct value types.
-  assert('Ember.computed.sortBy expects a string or array of strings as the sort definition.',
-    isArray(sortDefinitions) && sortDefinitions.length > 0);
+  assert('Ember.computed.sortBy expects one or more string arguments provided as the sort definition.', sortDefinitions.length > 0);
   sortDefinitions.forEach(s => {
-    assert('Ember.computed.sortBy expects a string or array of strings as the sort definition.', typeof s === 'string');
+    assert('Ember.computed.sortBy expects one or more string arguments provided as the sort definition.', typeof s === 'string');
   });
 
   // Normalize the sort properties

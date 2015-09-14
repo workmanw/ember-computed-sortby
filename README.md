@@ -7,12 +7,9 @@ Implementation for proposed computed macro addition to Ember. Details in [emberj
 ## Documentation
 
 A computed property which returns a new sorted array of content from the
-first dependent array. The sort order is based on the string or array of string values
-provided as the second argument.
-
-The second argument, sortDefinitions, can be a string or array of string value(s)
-which indicates the item property and direction of the sort. Adding a suffix of ':desc'
-will cause the list to be sorted in descending order.
+a dependent array. The sort order is defined by the second, and any subsequent,
+string arguments. Adding a suffix of ':desc' to any of those string arguments
+will cause that order to be applied as descending.
 
 Example:
 
@@ -25,7 +22,7 @@ var ToDoList = Ember.Object.extend({
   sortedTodosDesc: Ember.computed.sortBy('todos', 'name:desc'),
 
   // using secondary sort
-  sortedPriority: Ember.computed.sortBy('todos', ['priority', 'name'])
+  sortedPriority: Ember.computed.sortBy('todos', 'priority', 'name')
 });
 
 var todoList = ToDoList.create({todos: [
@@ -39,11 +36,12 @@ todoList.get('sortedTodos');      // [{ name:'Documentation', priority:3 }, { na
 todoList.get('sortedTodosDesc');  // [{ name:'Unit Test', priority:2 }, { name:'Release', priority:1 }, { name: 'Integration Test', priority: 2 }, { name:'Documentation', priority:3 }]
 todoList.get('priorityTodos');    // [{ name:'Release', priority:1 }, { name: 'Integration Test', priority: 2 }, { name:'Unit Test', priority:2 }, { name:'Documentation', priority:3 }]
 ```
+Method documentation:
 ```
 @method sort
 @for Ember.computed
 @param {String} itemsKey
-@param {String or Array} sortDefinitions a string or array of strings whose value(s) are sort properties (add `:desc` to the arrays sort properties to sort descending)
+@param {String} property name(s) to sort on. Append ':desc' to trigger sort to be applied as descending.
 @return {Ember.ComputedProperty} computes a new sorted array based on the sort property array
 @public
 ```

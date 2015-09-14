@@ -12,8 +12,8 @@ module('sortBy', {
     obj = Ember.Object.extend({
       sortedFnameUsers: sortBy('users', 'fname'),
       sortedLnameUsers: sortBy('users', 'lname:desc'),
-      sortedLnameUsers2: sortBy('users', ['lname:asc']),
-      lnameThenOldest: sortBy('users', ['lname:desc', 'age'])
+      sortedLnameUsers2: sortBy('users', 'lname:asc'),
+      lnameThenOldest: sortBy('users', 'lname:desc', 'age')
     }).create({
       users: Ember.A([
         { fname: 'Jaime',  lname: 'Lannister', age: 34 },
@@ -121,6 +121,18 @@ test('Bad args', function(assert) {
   assert.throws(function() {
     Ember.Object.extend({
       sortedUsers: sortBy('users', {})
+    }).create().get('sortedUsers');
+  }, 'Asserted when second argument was incorrect.');
+
+  assert.throws(function() {
+    Ember.Object.extend({
+      sortedUsers: sortBy('users', [])
+    }).create().get('sortedUsers');
+  }, 'Asserted when second argument was incorrect.');
+
+  assert.throws(function() {
+    Ember.Object.extend({
+      sortedUsers: sortBy('users', ['fname'])
     }).create().get('sortedUsers');
   }, 'Asserted when second argument was incorrect.');
 });
