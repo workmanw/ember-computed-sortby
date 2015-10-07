@@ -50,7 +50,7 @@ Method documentation:
 
 From within your Ember CLI project directory:
 ```
-ember install ember-computed-sortBy
+ember install ember-computed-sortby
 ```
 
 ## Running Tests
