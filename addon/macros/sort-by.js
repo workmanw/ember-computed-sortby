@@ -55,15 +55,16 @@ export default function(/*itemsKey, sortDefinitions*/) {
     assert('Ember.computed.sortBy expects one or more string arguments provided as the sort definition.', typeof s === 'string');
   });
 
-  // Normalize the sort properties
-  var normalizedSort = sortDefinitions.map(p => {
+  // Split out the sort definitions
+  sortDefinitions = sortDefinitions.map(p => {
     let [prop, direction] = p.split(':');
     direction = direction || 'asc';
     return [prop, direction];
   });
 
   // Map out the dependantKeys for the computed macro
-  var args = normalizedSort.map(prop => {
+  var args = sortDefinitions.map(sortDefinition => {
+    var prop = sortDefinition[0];
     return `${itemsKey}.@each.${prop}`;
   });
 
@@ -73,8 +74,8 @@ export default function(/*itemsKey, sortDefinitions*/) {
     if (items === null || typeof items !== 'object') { return Ember.A(); }
 
     return Ember.A(items.slice().sort((itemA, itemB) => {
-      for (var i = 0; i < normalizedSort.length; ++i) {
-        var [prop, direction] = normalizedSort[i];
+      for (var i = 0; i < sortDefinitions.length; ++i) {
+        var [prop, direction] = sortDefinitions[i];
         var result = compare(get(itemA, prop), get(itemB, prop));
         if (result !== 0) {
           return (direction === 'desc') ? (-1 * result) : result;
