@@ -1,9 +1,6 @@
 # Ember-computed-sortby
 
-Addon to make sorting a little easier for Ember.js when the sort order is immutable. This addon was originally a proof of concept for [emberjs/rfcs#87](https://github.com/emberjs/rfcs/pull/87). However that RFC was rejected, so this will continue to live on as an addon. 
-
-It is for that reason that this repo contains an initializer that tacks `sortBy` onto the `Ember.computed` object so it can be used as: `Ember.computed.sortBy`. Once Ember.js migrates to an addon, I'll likely follow suit and addonify this. 
-
+Addon to make sorting a little easier for Ember.js when the sort order is immutable. This addon was originally a proof of concept for [emberjs/rfcs#87](https://github.com/emberjs/rfcs/pull/87). However that RFC was rejected, so this will continue to live on as an addon.
 
 ## Documentation
 
@@ -15,18 +12,20 @@ will cause that order to be applied as descending.
 Example:
 
 ```javascript
-var ToDoList = Ember.Object.extend({
+import sortBy from 'ember-computed-sortby';
+
+let ToDoList = Ember.Object.extend({
   // using standard ascending sort
-  sortedTodos: Ember.computed.sortBy('todos', 'name'),
+  sortedTodos: sortBy('todos', 'name'),
 
   // using descending sort
-  sortedTodosDesc: Ember.computed.sortBy('todos', 'name:desc'),
+  sortedTodosDesc: sortBy('todos', 'name:desc'),
 
   // using secondary sort
-  sortedPriority: Ember.computed.sortBy('todos', 'priority', 'name')
+  sortedPriority: sortBy('todos', 'priority', 'name')
 });
 
-var todoList = ToDoList.create({todos: [
+let todoList = ToDoList.create({todos: [
   { name: 'Unit Test', priority: 2 },
   { name: 'Documentation', priority: 3 },
   { name: 'Integration Test', priority: 2 },
@@ -59,8 +58,7 @@ ember install ember-computed-sortby
 ### Setup
 
 * `git clone` this repository
-* `npm install`
-* `bower install`
+* `yarn install`
 
 ### Testing
 
