@@ -1,10 +1,7 @@
 import Ember from 'ember';
 
-var assert = Ember.assert;
-var get = Ember.get;
-var compare = Ember.compare;
-var computed = Ember.computed;
-var a_slice = Array.prototype.slice;
+const { assert, get, compare, computed } = Ember;
+const a_slice = Array.prototype.slice;
 
 
 /**
@@ -16,7 +13,7 @@ var a_slice = Array.prototype.slice;
   Example:
 
   ```javascript
-  var ToDoList = Ember.Object.extend({
+  let ToDoList = Ember.Object.extend({
     // using standard ascending sort
     sortedTodos: Ember.computed.sortBy('todos', 'name'),
 
@@ -27,7 +24,7 @@ var a_slice = Array.prototype.slice;
     sortedPriority: Ember.computed.sortBy('todos', 'priority', 'name')
   });
 
-  var todoList = ToDoList.create({todos: [
+  let todoList = ToDoList.create({todos: [
     { name: 'Unit Test', priority: 2 },
     { name: 'Documentation', priority: 3 },
     { name: 'Integration Test', priority: 2 },
@@ -47,8 +44,8 @@ var a_slice = Array.prototype.slice;
   @public
 */
 export default function(/*itemsKey, sortDefinitions*/) {
-  var sortDefinitions = a_slice.call(arguments);
-  var itemsKey = sortDefinitions.shift(0);
+  let sortDefinitions = a_slice.call(arguments);
+  let itemsKey = sortDefinitions.shift(0);
 
   assert('Ember.computed.sortBy expects one or more string arguments provided as the sort definition.', sortDefinitions.length > 0);
   sortDefinitions.forEach(s => {
@@ -63,20 +60,20 @@ export default function(/*itemsKey, sortDefinitions*/) {
   });
 
   // Map out the dependantKeys for the computed macro
-  var args = sortDefinitions.map(sortDefinition => {
-    var prop = sortDefinition[0];
+  let args = sortDefinitions.map(sortDefinition => {
+    let prop = sortDefinition[0];
     return `${itemsKey}.@each.${prop}`;
   });
 
   // Push in the actual sorting function
   args.push(function() {
-    var items = itemsKey === '@this' ? this : get(this, itemsKey);
+    let items = itemsKey === '@this' ? this : get(this, itemsKey);
     if (items === null || typeof items !== 'object') { return Ember.A(); }
 
     return Ember.A(items.slice().sort((itemA, itemB) => {
-      for (var i = 0; i < sortDefinitions.length; ++i) {
-        var [prop, direction] = sortDefinitions[i];
-        var result = compare(get(itemA, prop), get(itemB, prop));
+      for (let i = 0; i < sortDefinitions.length; ++i) {
+        let [prop, direction] = sortDefinitions[i];
+        let result = compare(get(itemA, prop), get(itemB, prop));
         if (result !== 0) {
           return (direction === 'desc') ? (-1 * result) : result;
         }
