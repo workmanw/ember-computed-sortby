@@ -13,15 +13,17 @@ const a_slice = Array.prototype.slice;
   Example:
 
   ```javascript
+  import sortBy from 'ember-computed-sortby';
+
   let ToDoList = Ember.Object.extend({
     // using standard ascending sort
-    sortedTodos: Ember.computed.sortBy('todos', 'name'),
+    sortedTodos: sortBy('todos', 'name'),
 
     // using descending sort
-    sortedTodosDesc: Ember.computed.sortBy('todos', 'name:desc'),
+    sortedTodosDesc: sortBy('todos', 'name:desc'),
 
     // using secondary sort
-    sortedPriority: Ember.computed.sortBy('todos', 'priority', 'name')
+    sortedPriority: sortBy('todos', 'priority', 'name')
   });
 
   let todoList = ToDoList.create({todos: [
